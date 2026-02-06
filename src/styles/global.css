@@ -24,7 +24,7 @@ html {
 }
 
 :root {
-  --maximum-text-width: 50rem;
+  --maximum-text-width: 64rem;
   --minimum-inline-margin: 1.5rem;
   --actual-inline-margin: max(
     var(--minimum-inline-margin),
