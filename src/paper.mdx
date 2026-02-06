@@ -16,7 +16,7 @@ authors:
   - name: Yujie Jin
     institution: TARS
   - name: Zijun Xu
-    institution: Fudan University
+    institution: [Fudan University, Shanghai Innovation Institute]
   - name: Xiaohui Wang
     institution: Fudan University
   - name: Yupeng Zheng
@@ -24,7 +24,7 @@ authors:
   - name: Zining Wang
     institution: TARS
   - name: Jieru Zhao
-    institution: TARS
+    institution: Shanghai Jiao Tong University
   - name: Yilun Chen
     institution: TARS
   - name: Wenchao Ding
@@ -36,6 +36,13 @@ notes:
     text: Equal contribution
   - symbol: †
     text: Corresponding Authors
+ordered_institutions:
+  - "Fudan University"
+  - "TARS"
+  - "Harbin Institute of Technology"
+  - "Tsinghua University"
+  - "Shanghai Jiao Tong University"
+  - "Shanghai Innovation Institute"
 links:
   - name: Paper
     # url: https://github.com/RomanHauksson/academic-project-astro-template
@@ -62,9 +69,6 @@ theme: device
 # # This is the icon that appears in the user's browser tab. To customize, change the favicon.svg file in /public/, or add your own file to /public/ and change the filename here.
 # favicon: favicon.svg
 
-# These keys are optional. If a link to your project page is in a Google search result, text message, or social media post, it will often appear as a "link preview card" based on its title, description, favicon, and thumbnail. After you publish your page, you can double check that these previews look right using [this tool](https://linkpreview.xyz/)
-# description: Simple project page template for your research paper, built with Astro and Tailwind
-# thumbnail: screenshot-light.png
 ---
 
 import Video from "./components/Video.astro";
@@ -105,9 +109,31 @@ Realizing interactive whole-body control for multi-humanoid systems is critical 
 
 </HighlightedSection>
 
-<h2 class="text-center">Demo</h2>
+<h2 class="text-center">Demos</h2>
 
-<Video src={outside} />
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  
+  <div class="text-center">
+    <Video src={outside} />
+    <p class="text-sm text-gray-500 mt-1">a</p>
+  </div>
+
+  <div class="text-center">
+    <Video src={outside} />
+    <p class="text-sm text-gray-500 mt-1">b</p>
+  </div>
+
+  <div class="text-center">
+    <Video src={outside} />
+    <p class="text-sm text-gray-500 mt-1">c</p>
+  </div>
+
+  <div class="text-center">
+    <Video src={outside} />
+    <p class="text-sm text-gray-500 mt-1">d</p>
+  </div>
+
+</div>
 
 <h2 class="text-center">Framework</h2>
 

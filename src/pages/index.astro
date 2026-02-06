@@ -16,6 +16,7 @@ import { Content, frontmatter } from "../paper.mdx";
 interface Frontmatter {
   title: string;
   authors: Author[];
+  ordered_institutions?: string[]; // <--- 添加这一行
   conference?: string;
   notes?: Note[];
   links?: Link[];
@@ -28,6 +29,7 @@ interface Frontmatter {
 const {
   title,
   authors,
+  ordered_institutions,
   conference,
   notes,
   links,
@@ -68,14 +70,8 @@ const prefix = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
   >
     <header class="mx-auto mb-12 max-w-[64rem] px-6 text-center">
       <h1 class="text-5xl font-medium">{title}</h1>
-      <!-- <div class="flex flex-col items-center gap-6">
-        <Authors authors={authors} />
-        {conference && <div>{conference}</div>}
-        {notes && <Notes notes={notes} />}
-        {links && <Links links={links} />}
-      </div> -->
       <div class="flex flex-col items-center gap-6">
-        <Authors authors={authors} notes={notes} />
+        <Authors authors={authors} notes={notes} ordered_institutions={ordered_institutions}/>
         {conference && <div>{conference}</div>}
         {links && <Links links={links} />}
       </div>

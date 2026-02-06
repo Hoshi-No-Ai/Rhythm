@@ -1,40 +1,59 @@
 ---
+import type { Author } from "../types/types";
+
 interface Props {
-  authors: {
-    name: string;
-    url?: string;
-    institution?: string;
-    notes?: string[];
-  }[];
+  authors: Author[];
   notes?: {
     symbol: string;
     text: string;
   }[];
+  ordered_institutions?: string[]; // 新增参数：接收手动指定的顺序
 }
 
-const { authors, notes = [] } = Astro.props;
+const { authors, notes = [], ordered_institutions } = Astro.props;
 
-// 1. 提取所有不重复的机构
-const uniqueInstitutions = Array.from(
-  new Set(authors.map((a) => a.institution).filter(Boolean))
-) as string[];
+// 1. 确定最终的机构列表
+// 如果传入了 ordered_institutions，就直接用它；否则自动从作者里提取
+const finalInstitutions = ordered_institutions || Array.from(
+  new Set(
+    authors
+      .flatMap((author) => 
+        Array.isArray(author.institution) 
+          ? author.institution 
+          : [author.institution]
+      )
+      .filter((inst): inst is string => Boolean(inst))
+  )
+);
 
 // 2. 辅助函数：获取作者的上标内容
-const getAuthorSuperscript = (author: any) => {
-  const parts = [];
+const getAuthorSuperscript = (author: Author) => {
+  const parts: (string | number)[] = [];
+  
+  // 处理机构编号
   if (author.institution) {
-    const instIndex = uniqueInstitutions.indexOf(author.institution) + 1;
-    parts.push(instIndex);
+    const authorInsts = Array.isArray(author.institution) 
+      ? author.institution 
+      : [author.institution];
+      
+    authorInsts.forEach((inst) => {
+      // 在 finalInstitutions 里找位置 (索引+1)
+      const index = finalInstitutions.indexOf(inst) + 1;
+      if (index > 0) parts.push(index);
+    });
   }
+  
+  // 处理备注符号 (*, †)
   if (author.notes) {
     parts.push(...author.notes);
   }
+  
   return parts.join(",");
 };
 ---
 
 <div class="mt-6 mb-8 text-center">
-  {/* --- 第一部分：作者名字列表 --- */}
+  {/* --- 作者名字列表 --- */}
   <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-lg sm:text-xl font-medium leading-relaxed">
     {
       authors.map((author, index) => {
@@ -43,7 +62,6 @@ const getAuthorSuperscript = (author: any) => {
         
         return (
           <span class="relative inline-flex items-baseline">
-            {/* 名字：深色模式适配 */}
             {author.url ? (
               <a 
                 href={author.url} 
@@ -56,14 +74,12 @@ const getAuthorSuperscript = (author: any) => {
               <span class="text-gray-900 dark:text-white">{author.name}</span>
             )}
             
-            {/* 上标 */}
             {superscript && (
               <sup class="text-sm text-gray-500 dark:text-gray-400 ml-0.5 -top-1 font-normal select-none">
                 {superscript}
               </sup>
             )}
             
-            {/* 逗号 */}
             {!isLast && <span class="text-gray-900 dark:text-white ml-0 mr-1">,</span>}
           </span>
         );
@@ -71,10 +87,10 @@ const getAuthorSuperscript = (author: any) => {
     }
   </div>
 
-  {/* --- 第二部分：单位列表 --- */}
-  <div class="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm text-gray-600 dark:text-gray-300">
+  {/* --- 单位列表 (按照 finalInstitutions 顺序显示) --- */}
+  <div class="mt-3 flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm text-gray-600 dark:text-gray-300">
     {
-      uniqueInstitutions.map((inst, index) => (
+      finalInstitutions.map((inst, index) => (
         <div class="flex items-center">
           <sup class="mr-1">{index + 1}</sup>
           <span>{inst}</span>
@@ -83,9 +99,9 @@ const getAuthorSuperscript = (author: any) => {
     }
   </div>
 
-  {/* --- 第三部分：备注 (这里改成了 mt-1，距离更近) --- */}
+  {/* --- 备注列表 --- */}
   {notes.length > 0 && (
-    <div class="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
+    <div class="mt-3 flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
       {notes.map((note) => (
         <div class="flex items-center">
           <sup class="mr-1">{note.symbol}</sup>

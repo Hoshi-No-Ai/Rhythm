@@ -1,9 +1,9 @@
-export type Author = {
+export interface Author {
   name: string;
   url?: string;
-  institution?: string;
+  institution?: string | string[]; 
   notes?: string[];
-};
+}
 
 export type Link = {
   url: string;
