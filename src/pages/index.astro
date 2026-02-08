@@ -1,5 +1,6 @@
 ---
 import { Font } from "astro:assets";
+import { Image } from "astro:assets";
 
 import Links from "../components/Links.astro";
 import Authors from "../components/Authors.astro";
@@ -12,6 +13,9 @@ import "../styles/global.css";
 import "katex/dist/katex-swap.css";
 
 import { Content, frontmatter } from "../paper.mdx";
+
+import fudanLogo from "../assets/logo/fudan.png";
+import tarsLogo from "../assets/logo/tars.svg";
 
 interface Frontmatter {
   title: string;
@@ -73,6 +77,12 @@ const prefix = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
       <div class="flex flex-col items-center gap-6">
         <Authors authors={authors} notes={notes} ordered_institutions={ordered_institutions}/>
         {conference && <div>{conference}</div>}
+        <div class="flex justify-center items-center gap-8 -mt-10">
+          {/* Logo 1: 复旦大学 */}
+          <Image src={fudanLogo} alt="Fudan University" class="h-14 w-auto object-contain dark:brightness-110"/>
+          {/* Logo 2: TARS */}
+          <Image src={tarsLogo} alt="TARS" class="h-14 w-auto object-contain dark:brightness-110"/>
+        </div>
         {links && <Links links={links} />}
       </div>
     </header>
