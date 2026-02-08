@@ -2,13 +2,14 @@
 title: "Rhythm: Learning Interactive Whole-Body Control for Dual Humanoids"
 authors:
   - name: Hongjin Chen
-    institution: Fudan University
+    institution: [Fudan University, TARS]
     notes: ["*"]
   - name: Wei Zhang
-    institution: Harbin Institute of Technology
+    institution: [TARS, Harbin Institute of Technology]
     notes: ["*"]
   - name: Pengfei Li
-    institution: Tsinghua University
+    institution: [TARS, Tsinghua University]
+    notes: ["†"]
   - name: Shihao Ma
     institution: Fudan University
   - name: Ke Ma
@@ -20,7 +21,7 @@ authors:
   - name: Xiaohui Wang
     institution: Fudan University
   - name: Yupeng Zheng
-    institution: TARS
+    institution: Institute of Automation, Chinese Academy of Sciences
   - name: Zining Wang
     institution: TARS
   - name: Jieru Zhao
@@ -28,7 +29,7 @@ authors:
   - name: Yilun Chen
     institution: TARS
   - name: Wenchao Ding
-    institution: Fudan University
+    institution: [Fudan University, TARS]
     notes: ["†"]
 # conference: Conference Name
 notes:
@@ -43,6 +44,7 @@ ordered_institutions:
   - "Tsinghua University"
   - "Shanghai Jiao Tong University"
   - "Shanghai Innovation Institute"
+  - "Institute of Automation, Chinese Academy of Sciences"
 links:
   - name: Paper
     # url: https://github.com/RomanHauksson/academic-project-astro-template
@@ -51,7 +53,7 @@ links:
     # url: https://github.com/RomanHauksson/academic-project-astro-template
     icon: academicons:arxiv
   - name: Video
-    # url: https://youtu.be/wjZofJX0v4M
+    url: https://youtu.be/aq5mVu8MB0s
     icon: ri:video-line
   - name: Code (Coming Soon)
     url: https://github.com/Hoshi-No-Ai/holosoma
@@ -85,17 +87,25 @@ import Wide from "./components/Wide.astro";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/starwind/tabs";
 import { Comparison } from "./components/Comparison.tsx";
 
-import outside from "./assets/outside.mp4";
-import dogsDiffc from "./assets/dogs-diffc.png"
-import dogsTrue from "./assets/dogs-true.png"
-import dogsMsillm from "@/assets/dogs-msillm.jpg"
+import lalaland from "./assets/1/lalaland.mp4"
+import greeting1 from "./assets/1/greeting.mp4"
+import greeting2 from "./assets/2/greeting.mp4"
+import hug_v1 from "./assets/2/hug_v1.mp4"
+import hug_v2 from "./assets/2/hug_v2.mp4"
+import shoulder2shoulder_v1 from "./assets/2/shoulder2shoulder_v1.mp4"
+import shoulder2shoulder_v2 from "./assets/2/shoulder2shoulder_v2.mp4"
+
+import greeting1_robust from "./assets/1/greeting_robust.mp4"
+import greeting2_robust from "./assets/2/greeting_rubust.mp4"
+import hug_v1_robust from "./assets/2/hug_rubust_v1.mp4"
+import hug_v2_robust from "./assets/2/hug_robust_v2.mp4"
 
 import teaserImage from "@/assets/teaser.png"
 import frameworkImage from "@/assets/framework.png"
 
 <h2 class="text-center">Overview</h2>
 
-<Video src={outside} />
+<YouTubeVideo videoId="aq5mVu8MB0s" />
 
 <HighlightedSection>
 
@@ -111,26 +121,77 @@ Realizing interactive whole-body control for multi-humanoid systems is critical 
 
 <h2 class="text-center">Demos</h2>
 
+<h3 class="text-center">Coordinated Interaction</h3>
+
+<h4 class="text-center">La La Land</h4>
+
+<div class="text-center">
+  <Video src={lalaland} />
+  {/* <div class="text-sm text-gray-500 -mt-5">La La Land</div> */}
+</div>
+
+<h3 class="text-center">Contact-Rich Interaction</h3>
+
+<h4 class="text-center">Greeting</h4>
+
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
   
   <div class="text-center">
-    <Video src={outside} />
-    <p class="text-sm text-gray-500 mt-1">a</p>
+    <Video src={greeting1} />
   </div>
 
   <div class="text-center">
-    <Video src={outside} />
-    <p class="text-sm text-gray-500 mt-1">b</p>
+    <Video src={greeting2} />
+  </div>
+
+</div>
+
+<h4 class="text-center">Hug</h4>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  
+  <div class="text-center">
+    <Video src={hug_v1} />
   </div>
 
   <div class="text-center">
-    <Video src={outside} />
-    <p class="text-sm text-gray-500 mt-1">c</p>
+    <Video src={hug_v2} />
+  </div>
+
+</div>
+
+<h4 class="text-center">Shoulder to Shoulder</h4>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  
+  <div class="text-center">
+    <Video src={shoulder2shoulder_v1} />
   </div>
 
   <div class="text-center">
-    <Video src={outside} />
-    <p class="text-sm text-gray-500 mt-1">d</p>
+    <Video src={shoulder2shoulder_v2} />
+  </div>
+
+</div>
+
+<h3 class="text-center">Robustness to Disturbances</h3>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  
+  <div class="text-center">
+    <Video src={greeting1_robust} />
+  </div>
+
+  <div class="text-center">
+    <Video src={greeting2_robust} />
+  </div>
+
+    <div class="text-center">
+    <Video src={hug_v1_robust} />
+  </div>
+
+  <div class="text-center">
+    <Video src={hug_v2_robust} />
   </div>
 
 </div>
@@ -147,7 +208,7 @@ Our main contributions are summarized as follows:
 - **IGRL Policy:** We introduce **IGRL** (Interaction-Guided Reinforcement Learning), a multi-agent learning module that masters coupled interaction dynamics via graph-based rewards, enabling agents to learn robust and physically consistent behaviors.
 - **Extensive Validation:** We conduct extensive experiments on **Unitree G1** humanoids. Quantitative and qualitative evaluations across diverse interaction tasks in both simulation and the real world demonstrate the superior performance and robustness of our framework.
 
-## BibTeX citation
+{/* ## BibTeX citation
 
 Displaying the BibTeX entry for your paper in a code block makes it easy to copy and paste.
 
@@ -158,4 +219,4 @@ Displaying the BibTeX entry for your paper in a code block makes it easy to copy
   year = "2024",
   howpublished = "\url{https://research-template.roman.technology}",
 }
-```
+``` */}
